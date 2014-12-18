@@ -6,7 +6,7 @@
 	"andy.lv <andy.lv@live.com>"
   ],
   "description": "message for angular, like message center can use in factory,service,etc. which can't inject $scope",
-  "main": "./Dist/ngMessage.js",
+  "main": "./ngMessage.js",
   "keywords": [
 	"angular",
 	"angularjs",
