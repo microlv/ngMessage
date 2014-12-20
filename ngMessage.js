@@ -15,22 +15,21 @@
 
 	angular.module('ngMessage.services', []).provider('ngMessage', [function () {
 		function Message() {
-			this.handles = [];
+			this._events = [];
 		}
 
-		Message.prototype = {
-			constructor: Message,
-			register: function (fn) {
-				this.handles.push(fn);
-			},
-			remove: function () {
-				this.handles = [];
-			},
-			trigger: function (e, args, scope) {
-				for (var i = 0; i < this.handles.length; i++) {
-					if (typeof this.handles[i] === 'function') {
-						this.handles[i].call(scope || this, e, args);
-					}
+		Message.fn = Message.prototype;
+
+		Message.fn.register = Message.fn.on = function (fn) {
+			this._events.push(fn);
+		};
+		Message.fn.remove = Message.fn.on = function () {
+			this._events = [];
+		};
+		Message.fn.trigger = Message.fn.fire = function (args, scope) {
+			for (var i = 0; i < this._events.length; i++) {
+				if (typeof this._events[i] === 'function') {
+					this._events[i].call(scope, args);
 				}
 			}
 		};
@@ -91,14 +90,16 @@
 					}
 				},
 				list: function (name) {
-					if (name === null || name === undefined) {
+					if (!name) {
 						return ngMsg;
 					}
 					return ngMsg[name] || {};
 				}
 			};
 		}];
-	}]);
+	}
+	])
+	;
 
 	angular.module('ngMessage.directive', []).directive('ngMessage', ['ngMessage', function (ngMessage) {
 		return {
@@ -122,4 +123,5 @@
 
 	angular.module('ngMessage', ['ngMessage.services', 'ngMessage.directive']);
 
-})(angular);
+})
+(angular);
