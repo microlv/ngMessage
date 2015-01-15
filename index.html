@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>ngMessage (ng-message) by microlv</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>ngMessage (ng-message)</h1>
+        <h2>message for angular,use it in anywhere! powerful and simple like async/promise!</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/microlv/ngMessage/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/microlv/ngMessage/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/microlv/ngMessage" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h3>
+<a id="welcome-to-ngmessage-github-pages" class="anchor" href="#welcome-to-ngmessage-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to ngMessage GitHub Pages.</h3>
+
+<pre><code>1.powerful message! you can use it like q/async/promise!
+2.message for angular, different with $scope.$emit/$broadcast
+3.use single service(like message center) to register and send.
+3.currently support promise and mulit message.
+4.more demo can see app.js and index.html
+</code></pre>
+
+<h2>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
+
+<p>Check out [<a href="https://github.com/microlv/ngMessage.git">https://github.com/microlv/ngMessage.git</a>]</p>
+
+<p>Wiki: <a href="http://microlv.github.io/ngMessage">http://microlv.github.io/ngMessage</a> (working it)</p>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<pre><code>message center base on angularjs.
+1.use the message to inform other controller
+2.support service and factory(these don't contain $rootScope and $scope)
+3.support promise and then
+</code></pre>
+
+<h2>
+<a id="support" class="anchor" href="#support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support</h2>
+
+<p>Currently only test in Chrome, require angularjs</p>
+
+<h2>
+<a id="installation--usage" class="anchor" href="#installation--usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation &amp; usage</h2>
+
+<p>In browsers:</p>
+
+<div class="highlight highlight-html"><pre><span class="pl-s2">    &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s1"><span class="pl-pds">"</span>ngMessage.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span></pre></div>
+
+<p>Bower install<a href="http://bower.io/"><code>bower</code></a>:</p>
+
+<pre><code>    bower install ng-message -S
+</code></pre>
+
+<p>Using:</p>
+
+<p>1.Base use(via javascript code)</p>
+
+<div class="highlight highlight-js"><pre>    <span class="pl-c1">1</span>.first inject ngMessage
+    <span class="pl-s">var</span> app <span class="pl-k">=</span> angular.module(<span class="pl-s1"><span class="pl-pds">'</span>app<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>ngMessage<span class="pl-pds">'</span></span>]);
+
+    app.controller(<span class="pl-s1"><span class="pl-pds">'</span>controller1<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>ngMessage<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>$scope<span class="pl-pds">'</span></span>, <span class="pl-st">function</span> (<span class="pl-vpf">ngMsg</span>, <span class="pl-vpf">$scope</span>) {
+
+        <span class="pl-c1">2</span>.second register the message, message name is single.
+        ngMsg.register(<span class="pl-s1"><span class="pl-pds">'</span>demo.1<span class="pl-pds">'</span></span>, <span class="pl-st">function</span> (<span class="pl-vpf">k</span>) {
+            <span class="pl-en">console</span><span class="pl-s3">.log</span>(<span class="pl-s1"><span class="pl-pds">'</span>demo.1 response<span class="pl-pds">'</span></span>);
+        });
+
+        ngMsg.on(<span class="pl-s1"><span class="pl-pds">'</span>demo.2<span class="pl-pds">'</span></span>, <span class="pl-st">function</span> (<span class="pl-vpf">k</span>) {
+            <span class="pl-en">console</span><span class="pl-s3">.log</span>(<span class="pl-s1"><span class="pl-pds">'</span>demo.2 response<span class="pl-pds">'</span></span>);
+        });
+    }]);
+
+    app.controller(<span class="pl-s1"><span class="pl-pds">'</span>controller2<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>ngMessage<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>$scope<span class="pl-pds">'</span></span>, <span class="pl-st">function</span> (<span class="pl-vpf">ngMsg</span>, <span class="pl-vpf">$scope</span>) {
+        <span class="pl-s3">$scope</span>.<span class="pl-en">click</span> <span class="pl-k">=</span> <span class="pl-st">function</span> () {
+            <span class="pl-c1">3</span>.fire the message
+            ngMsg.trigger(<span class="pl-s1"><span class="pl-pds">'</span>demo.1<span class="pl-pds">'</span></span>, [{a<span class="pl-k">:</span> <span class="pl-c1">1</span>}, {a<span class="pl-k">:</span> <span class="pl-c1">2</span>}]);
+        };
+
+        <span class="pl-s3">$scope</span>.<span class="pl-en">remove</span> <span class="pl-k">=</span> <span class="pl-st">function</span> () {
+            ngMsg.<span class="pl-s3">remove</span>(<span class="pl-s1"><span class="pl-pds">'</span>demo.1<span class="pl-pds">'</span></span>);
+            $scope.<span class="pl-s3">click</span>();
+        };
+
+        <span class="pl-c">//console.log(ngMsg.list());</span>
+    }]);</pre></div>
+
+<p>2.Via element
+must use ng-message attr and msg-name for register a unique message</p>
+
+<div class="highlight highlight-js"><pre>    <span class="pl-k">&lt;</span>a href<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span> data<span class="pl-k">-</span>ng<span class="pl-k">-</span>message data<span class="pl-k">-</span>msg<span class="pl-k">-</span>name<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>demoFactoryOnMessage<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>fire factory message<span class="pl-k">&lt;</span>/a<span class="pl-k">&gt;</span>
+
+    <span class="pl-c">//use controller to init function</span>
+    app.controller(<span class="pl-s1"><span class="pl-pds">'</span>controller3<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>demoFactory<span class="pl-pds">'</span></span>, <span class="pl-st">function</span> (<span class="pl-vpf">demoFactory</span>) {
+        demoFactory.onMessage();
+    }]);</pre></div>
+
+<p>in javascript code, you can use it like q/async/promise, and more powerful then the base angular $q</p>
+
+<div class="highlight highlight-js"><pre>    ngMsg.on(<span class="pl-s1"><span class="pl-pds">'</span>demoFactoryOnMessage<span class="pl-pds">'</span></span>, <span class="pl-st">function</span> (<span class="pl-vpf">d</span>) {
+        <span class="pl-en">console</span><span class="pl-s3">.log</span>(<span class="pl-s1"><span class="pl-pds">'</span>factory task 1<span class="pl-pds">'</span></span>);
+        d.resolve();
+    }).then(<span class="pl-st">function</span> (<span class="pl-vpf">d</span>) {
+        <span class="pl-en">console</span><span class="pl-s3">.log</span>(<span class="pl-s1"><span class="pl-pds">'</span>factory task 2<span class="pl-pds">'</span></span>);
+        d.resolve();
+    }).series([
+        <span class="pl-st">function</span> (<span class="pl-vpf">d</span>) {
+            <span class="pl-en">console</span><span class="pl-s3">.log</span>(<span class="pl-s1"><span class="pl-pds">'</span>series task 3<span class="pl-pds">'</span></span>);
+            d.resolve();
+        }, <span class="pl-st">function</span> (<span class="pl-vpf">d</span>) {
+            <span class="pl-en">console</span><span class="pl-s3">.log</span>(<span class="pl-s1"><span class="pl-pds">'</span>series task 4<span class="pl-pds">'</span></span>);
+            d.resolve();
+        }
+    ], <span class="pl-st">function</span> (<span class="pl-vpf">d</span>) {
+        <span class="pl-en">console</span><span class="pl-s3">.log</span>(<span class="pl-s1"><span class="pl-pds">'</span>series task 5<span class="pl-pds">'</span></span>);
+    }).then(<span class="pl-st">function</span> () {
+        <span class="pl-c">//why here don't work??</span>
+        <span class="pl-c">//because task 5 don't resolve the it!!!</span>
+        <span class="pl-en">console</span><span class="pl-s3">.log</span>(<span class="pl-s1"><span class="pl-pds">'</span>I can<span class="pl-cce">\'</span>t execute<span class="pl-pds">'</span></span>);
+    });</pre></div>
+
+<p>3.Via directive:</p>
+
+<div class="highlight highlight-js"><pre>    <span class="pl-k">&lt;</span>div data<span class="pl-k">-</span>ng<span class="pl-k">-</span>message data<span class="pl-k">-</span>msg<span class="pl-k">-</span>name<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>directive.1<span class="pl-pds">"</span></span> style<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>background-color: #999<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
+        directive <span class="pl-c1">1</span> click test
+    <span class="pl-k">&lt;</span>/div<span class="pl-k">&gt;</span>
+
+    <span class="pl-k">&lt;</span>div data<span class="pl-k">-</span>ng<span class="pl-k">-</span>message data<span class="pl-k">-</span>msg<span class="pl-k">-</span>name<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>directive.2<span class="pl-pds">"</span></span> data<span class="pl-k">-</span>msg<span class="pl-k">-</span>type<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>dblclick<span class="pl-pds">"</span></span> style<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>background-color: #999<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>
+        directive <span class="pl-c1">2</span> dblclick test
+    <span class="pl-k">&lt;</span>/div<span class="pl-k">&gt;</span>
+
+    ngMsg.on(<span class="pl-s1"><span class="pl-pds">'</span>directive.1<span class="pl-pds">'</span></span>, <span class="pl-st">function</span> (<span class="pl-vpf">k</span>) {
+        <span class="pl-en">console</span><span class="pl-s3">.log</span>(<span class="pl-s1"><span class="pl-pds">'</span>directive.1 response<span class="pl-pds">'</span></span>);
+    });
+    ngMsg.on(<span class="pl-s1"><span class="pl-pds">'</span>directive.2<span class="pl-pds">'</span></span>, <span class="pl-st">function</span> (<span class="pl-vpf">k</span>) {
+        <span class="pl-en">console</span><span class="pl-s3">.log</span>(<span class="pl-s1"><span class="pl-pds">'</span>directive.2 response<span class="pl-pds">'</span></span>);
+    });</pre></div>
+
+<h2>
+<a id="open-api" class="anchor" href="#open-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Open Api</h2>
+
+<p>1.register a message</p>
+
+<div class="highlight highlight-js"><pre>    Message.register;
+    Message.on
+    Message.bind
+    Message.addLister</pre></div>
+
+<p>2.remove a message</p>
+
+<div class="highlight highlight-js"><pre>    Message.remove
+    Message.off
+    Message.unbind
+    Message.removeLister</pre></div>
+
+<p>3.trigger a message</p>
+
+<div class="highlight highlight-js"><pre>    Message.trigger
+    Message.fire
+    Message.emit</pre></div>
+
+<p>4.show all message</p>
+
+<div class="highlight highlight-js"><pre>    Message.list
+    Message.list(name)</pre></div>
+
+<p>5.promise</p>
+
+<div class="highlight highlight-js"><pre>    Message(<span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>).then
+    Message(<span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,<span class="pl-st">function</span>(){}).then
+    Message(<span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>).series
+    Message(<span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>).parallel
+
+    Message(<span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>).then(<span class="pl-st">function</span>(){})
+               .series([],<span class="pl-st">function</span>(){})
+               .parallel([],<span class="pl-st">function</span>(){})
+               .then(<span class="pl-st">function</span>(){})</pre></div>
+
+<h2>
+<a id="author" class="anchor" href="#author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author</h2>
+
+<p><a href="mailto:Andy.lv@live.com">Andy.lv@live.com</a>;
+Any problem contact with me.</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
