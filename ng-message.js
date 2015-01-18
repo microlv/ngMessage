@@ -20,7 +20,7 @@
         isArray = Array.isArray;
 
     if (typeof angular === 'undefined') {
-        throw new Error('ngMessage\'s JavaScript requires angular');
+        throw new Error(exceptionResource.requireAngular);
     }
 
     angular.module('ngMessage.services', []).provider('ngMessage', [function () {
@@ -212,17 +212,6 @@
         Message.fn.on = Message.fn.register;
         Message.fn.bind = Message.fn.register;
         Message.fn.addLister = Message.fn.register;
-
-        //Message.fn.one = function (name, fn) {
-        //    if (!this.checkRequired(name, fn)) {
-        //        return;
-        //    }
-        //    this.execLimit.push({name: name, callTime: 1, executed: false});
-        //    this.events[name] = this.events[name] || [];
-        //    if (this.events[name].length === 0) {
-        //        this.events[name].push(fn);
-        //    }
-        //};
 
         Message.fn.remove = function (name, fn) {
             if (!name) {
