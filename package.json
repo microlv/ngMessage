@@ -1,6 +1,6 @@
 {
   "name": "ngMessage",
-  "version": "1.0.1",
+  "version": "1.0.8",
   "description": "message for angularjs",
   "main": "ngMessage.js",
   "scripts": {
